@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 // Styled components
@@ -10,7 +11,7 @@ const Body = styled.div`
   margin: 0;
 `;
 
-const LoginContainer = styled.div`
+const LoginContainer = styled.form`
   background-color: #f5f5f5;
   border-radius: 10px;
   padding: 20px;
@@ -63,21 +64,53 @@ const Button = styled.button`
 
 // Main component
 const SignUp = () => {
+  const navigate = useNavigate();
+
   return (
     <Body>
       <LoginContainer>
-        <Title>
+        <Title>회원가입</Title>
+        <div>
+          <Title for="id">아이디</Title>
+          <Input
+            type="text"
+            id="id"
+            placeholder="아이디"
+            minLength="4"
+            maxLength="10"
+          />
+        </div>
+        <div>
+          <Title for="password">비밀번호</Title>
+          <Input
+            type="password"
+            id="password"
+            placeholder="비밀번호"
+            minLength="4"
+            maxLength="15"
+          />
+        </div>
+        <div>
+          <Title for="nickname">닉네임</Title>
+          <Input
+            type="text"
+            id="nickname"
+            placeholder="닉네임"
+            minLength="1"
+            maxLength="10"
+          />
+        </div>
+        <Button type="submit" className="signUp">
           회원가입
-          <br />
-          아이디
-        </Title>
-        <Input type="text" placeholder="아이디" />
-        <Title>비밀번호</Title>
-        <Input type="password" placeholder="비밀번호" />
-        <Title>닉네임</Title>
-        <Input type="text" placeholder="닉네임" />
-        <Button className="signUp">회원가입</Button>
-        <Button className="login">로그인</Button>
+        </Button>
+        <Button
+          onClick={() => {
+            navigate("/login");
+          }}
+          className="login"
+        >
+          로그인
+        </Button>
       </LoginContainer>
     </Body>
   );
