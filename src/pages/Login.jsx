@@ -1,7 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Body = styled.div`
-  background-color: pink;
+  background-color: 20c9c9;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -62,19 +63,43 @@ const Button = styled.button`
 
 // Main component
 const Login = () => {
+  const navigate = useNavigate();
+
   return (
     <Body>
       <LoginContainer>
-        <Title>
+        <Title>로그인</Title>
+        <div>
+          <Title for="id">아이디</Title>
+          <Input
+            type="text"
+            id="id"
+            placeholder="아이디"
+            minLength="4"
+            maxLength="10"
+          />
+        </div>
+        <div>
+          <Title for="password">비밀번호</Title>
+          <Input
+            type="password"
+            id="password"
+            placeholder="비밀번호"
+            minLength="4"
+            maxLength="15"
+          />
+        </div>
+        <Button type="submit" className="login">
           로그인
-          <br />
-          아이디
-        </Title>
-        <Input type="text" placeholder="아이디" />
-        <Title>비밀번호</Title>
-        <Input type="password" placeholder="비밀번호" />
-        <Button className="login">로그인</Button>
-        <Button className="signup">회원가입</Button>
+        </Button>
+        <Button
+          onClick={() => {
+            navigate("/signup");
+          }}
+          className="signup"
+        >
+          회원가입
+        </Button>
       </LoginContainer>
     </Body>
   );
