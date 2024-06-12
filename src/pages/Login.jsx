@@ -1,4 +1,7 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { login } from "../lib/api/auth";
 
 const Body = styled.div`
   background-color: pink;
@@ -9,7 +12,7 @@ const Body = styled.div`
   margin: 0;
 `;
 
-const LoginContainer = styled.div`
+const LoginContainer = styled.form`
   background-color: #f5f5f5;
   border-radius: 10px;
   padding: 20px;
@@ -61,20 +64,55 @@ const Button = styled.button`
 `;
 
 // Main component
-const Login = () => {
+const Login = ({ setUser }) => {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    const { userId, nickname, avatar } = await login({
+      id: id,
+      password: password,
+    });
+    setUser({ userId, nickname, avatar });
+  };
+
   return (
     <Body>
-      <LoginContainer>
-        <Title>
+      <LoginContainer onSubmit={handleLogin}>
+        <div>
+          <Title htmlFor="id">아이디</Title>
+          <Input
+            type="text"
+            onChange={(e) => setId(e.target.value)}
+            id="id"
+            placeholder="아이디"
+            minLength="4"
+            maxLength="10"
+          />
+        </div>
+        <div>
+          <Title htmlFor="password">비밀번호</Title>
+          <Input
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            id="password"
+            placeholder="비밀번호"
+            minLength="4"
+            maxLength="15"
+          />
+        </div>
+        <Button type="submit" className="login">
           로그인
-          <br />
-          아이디
-        </Title>
-        <Input type="text" placeholder="아이디" />
-        <Title>비밀번호</Title>
-        <Input type="password" placeholder="비밀번호" />
-        <Button className="login">로그인</Button>
-        <Button className="signup">회원가입</Button>
+        </Button>
+        <Button
+          onClick={() => {
+            navigate("/signup");
+          }}
+          className="signup"
+        >
+          회원가입
+        </Button>
       </LoginContainer>
     </Body>
   );
