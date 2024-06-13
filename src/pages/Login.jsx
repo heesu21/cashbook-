@@ -70,12 +70,15 @@ const Login = ({ setUser }) => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     const { userId, nickname, avatar } = await login({
       id: id,
       password: password,
     });
+    alert("로그인이 되었습니다.");
     setUser({ userId, nickname, avatar });
+    navigate("/");
   };
 
   return (
