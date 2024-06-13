@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { login } from "../lib/api/auth";
 
 const Body = styled.div`
-  background-color: pink;
+  background-color: 20c9c9;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,6 +64,7 @@ const Button = styled.button`
 `;
 
 // Main component
+
 const Login = ({ setUser }) => {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");

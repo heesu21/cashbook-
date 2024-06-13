@@ -84,6 +84,7 @@ const SignUp = () => {
     }
   };
 
+
   const navigate = useNavigate();
 
   return (
