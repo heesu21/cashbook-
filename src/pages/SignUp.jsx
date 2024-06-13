@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { register } from "../lib/api/auth";
 
 // Styled components
 const Body = styled.div`
@@ -64,38 +66,60 @@ const Button = styled.button`
 
 // Main component
 const SignUp = () => {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    console.log(1);
+    const response = await register({
+      id: id,
+      password: password,
+      nickname: nickname,
+    });
+    if (response) {
+      confirm("회원가입이 완료되었습니다.");
+      navigate("/login");
+    }
+  };
+
+
   const navigate = useNavigate();
 
   return (
     <Body>
-      <LoginContainer>
+      <LoginContainer onSubmit={handleRegister}>
         <Title>회원가입</Title>
         <div>
-          <Title for="id">아이디</Title>
+          <Title htmlFor="id">아이디</Title>
           <Input
             type="text"
             id="id"
             placeholder="아이디"
+            onChange={(e) => setId(e.target.value)}
             minLength="4"
             maxLength="10"
           />
         </div>
         <div>
-          <Title for="password">비밀번호</Title>
+          <Title htmlFor="password">비밀번호</Title>
           <Input
             type="password"
             id="password"
             placeholder="비밀번호"
+            onChange={(e) => setPassword(e.target.value)}
             minLength="4"
             maxLength="15"
           />
         </div>
         <div>
-          <Title for="nickname">닉네임</Title>
+          <Title htmlFor="nickname">닉네임</Title>
           <Input
             type="text"
             id="nickname"
             placeholder="닉네임"
+            onChange={(e) => setNickname(e.target.value)}
             minLength="1"
             maxLength="10"
           />

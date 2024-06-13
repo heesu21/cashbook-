@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { login } from "../lib/api/auth";
 
 const Body = styled.div`
   background-color: 20c9c9;
@@ -10,7 +12,7 @@ const Body = styled.div`
   margin: 0;
 `;
 
-const LoginContainer = styled.div`
+const LoginContainer = styled.form`
   background-color: #f5f5f5;
   border-radius: 10px;
   padding: 20px;
@@ -62,17 +64,28 @@ const Button = styled.button`
 `;
 
 // Main component
-const Login = () => {
+
+const Login = ({ setUser }) => {
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    const { userId, nickname, avatar } = await login({
+      id: id,
+      password: password,
+    });
+    setUser({ userId, nickname, avatar });
+  };
 
   return (
     <Body>
-      <LoginContainer>
-        <Title>로그인</Title>
+      <LoginContainer onSubmit={handleLogin}>
         <div>
-          <Title for="id">아이디</Title>
+          <Title htmlFor="id">아이디</Title>
           <Input
             type="text"
+            onChange={(e) => setId(e.target.value)}
             id="id"
             placeholder="아이디"
             minLength="4"
@@ -80,9 +93,10 @@ const Login = () => {
           />
         </div>
         <div>
-          <Title for="password">비밀번호</Title>
+          <Title htmlFor="password">비밀번호</Title>
           <Input
             type="password"
+            onChange={(e) => setPassword(e.target.value)}
             id="password"
             placeholder="비밀번호"
             minLength="4"
